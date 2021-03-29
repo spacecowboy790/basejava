@@ -7,8 +7,7 @@ public class ArrayStorage {
     void clear() {
     }
 
-    void save(Resume r) {
-    }
+    void save(Resume r) { }
 
     Resume get(String uuid) {
         return null;
