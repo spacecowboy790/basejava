@@ -84,6 +84,6 @@ public class ArrayStorage {
     }
 
     private void printWrongMessage() {
-        System.out.println("Резюме не сущесвтует");
+        System.out.println("Резюме не существует");
     }
 }
