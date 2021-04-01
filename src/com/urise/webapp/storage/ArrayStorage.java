@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
 
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int size = 0;
 
     public void clear() {
@@ -17,36 +17,31 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void save(Resume r) {
+    public void save(Resume resume) {
         if (size == storage.length) {
             System.out.println("Нет места для сохранения");
-        } else if (searchIndex(r.getUuid()) == -1) {
-            storage[size++] = r;
+        } else if (searchIndex(resume.getUuid()) == -1) {
+            storage[size++] = resume;
         } else {
-            System.out.println("Такое резюме уже существует");
+            System.out.println("Резюме " + resume.getUuid() + " уже существует");
         }
     }
 
-    public void update(Resume r) {
-        if (searchIndex(r.getUuid()) != -1) {
-            int index = searchIndex(r.getUuid());
-            Resume resume = new Resume();
-            resume.setUuid("new " + r.getUuid());
+    public void update(Resume resume) {
+        int index = searchIndex(resume.getUuid());
+        if (index != -1) {
             storage[index] = resume;
         } else {
-            printWrongMessage();
+            printWrongMessage(resume.getUuid());
         }
     }
 
     public Resume get(String uuid) {
-        if (searchIndex(uuid) != -1) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    return storage[i];
-                }
-            }
+        int index = searchIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         } else {
-            printWrongMessage();
+            printWrongMessage(uuid);
         }
         return null;
     }
@@ -59,7 +54,7 @@ public class ArrayStorage {
             }
             size--;
         } else {
-            printWrongMessage();
+            printWrongMessage(uuid);
         }
     }
 
@@ -83,7 +78,7 @@ public class ArrayStorage {
         return -1;
     }
 
-    private void printWrongMessage() {
-        System.out.println("Резюме не существует");
+    private void printWrongMessage(String uuid) {
+        System.out.println("Резюме " + uuid + " не существует");
     }
 }
