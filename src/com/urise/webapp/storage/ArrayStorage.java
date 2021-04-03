@@ -40,18 +40,15 @@ public class ArrayStorage {
         int index = searchIndex(uuid);
         if (index != -1) {
             return storage[index];
-        } else {
-            printWrongMessage(uuid);
         }
+        printWrongMessage(uuid);
         return null;
     }
 
     public void delete(String uuid) {
         int index = searchIndex(uuid);
         if (index != -1) {
-            for (int i = index; i < size; i++) {
-                storage[i] = storage[i + 1];
-            }
+            if (size - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
             size--;
         } else {
             printWrongMessage(uuid);
