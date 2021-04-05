@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public abstract class AbstractArrayStorage implements Storage {
 
-    protected static final int STORAGE_LIMIT = 10_000;
+    protected static final int STORAGE_LIMIT = 3;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
@@ -20,7 +20,11 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume resume) {
         int index = searchIndex(resume.getUuid());
-        updateDetail(resume, index);
+        if (index >= 0) {
+            storage[index] = resume;
+        } else {
+            printWrongMessage(resume.getUuid());
+        }
     }
 
     public void save(Resume resume) {
@@ -32,7 +36,11 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = searchIndex(uuid);
-        return getDetail(uuid, index);
+        if (index >= 0) {
+            return storage[index];
+        }
+        printWrongMessage(uuid);
+        return null;
     }
 
     public void clear() {
@@ -55,11 +63,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void deleteDetail(String uuid, int index);
 
-    protected abstract void updateDetail(Resume resume, int index);
-
     protected abstract void saveDetail(Resume resume, int index);
-
-    protected abstract Resume getDetail(String uuid, int index);
 
     protected void printWrongMessage(String uuid) {
         System.out.println("Резюме " + uuid + " не существует");

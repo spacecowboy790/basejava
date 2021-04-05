@@ -24,15 +24,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void updateDetail(Resume resume, int index) {
-        if (index >= 0) {
-            storage[index] = resume;
-        } else {
-            printWrongMessage(resume.getUuid());
-        }
-    }
-
-    @Override
     protected void saveDetail(Resume resume, int index) {
         if (index < 0) {
             index = -index - 1;
@@ -42,14 +33,5 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         } else {
             printMessageIsExist(resume);
         }
-    }
-
-    @Override
-    protected Resume getDetail(String uuid, int index) {
-        if (index >= 0) {
-            return storage[index];
-        }
-        printWrongMessage(uuid);
-        return null;
     }
 }

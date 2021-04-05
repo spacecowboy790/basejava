@@ -28,30 +28,11 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void updateDetail(Resume resume, int index) {
-        if (index != -1) {
-            storage[index] = resume;
-        } else {
-            printWrongMessage(resume.getUuid());
-        }
-
-    }
-
-    @Override
     protected void saveDetail(Resume resume, int index) {
         if (index == -1) {
             storage[size++] = resume;
         } else {
             printMessageIsExist(resume);
         }
-    }
-
-    @Override
-    protected Resume getDetail(String uuid, int index) {
-        if (index != -1) {
-            return storage[index];
-        }
-        printWrongMessage(uuid);
-        return null;
     }
 }
