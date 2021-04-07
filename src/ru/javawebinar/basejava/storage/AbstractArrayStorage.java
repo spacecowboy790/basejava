@@ -22,7 +22,6 @@ public abstract class AbstractArrayStorage implements Storage {
             if (size - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
             size--;
         } else {
-            //printWrongMessage(uuid);
             throw new NotExistStorageException(uuid);
         }
     }
@@ -32,7 +31,6 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             storage[index] = resume;
         } else {
-            //printWrongMessage(resume.getUuid());
             throw new NotExistStorageException(resume.getUuid());
         }
     }
@@ -41,13 +39,11 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = searchIndex(resume.getUuid());
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Нет места для сохранения", resume.getUuid());
-            //System.out.println("Нет места для сохранения");
         } else if (index < 0) {
             saveDetail(resume, index);
             size++;
         } else {
             throw new ExistStorageException(resume.getUuid());
-            //printMessageIsExist(resume);
         }
     }
 
@@ -56,9 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        //printWrongMessage(uuid);
         throw new NotExistStorageException(uuid);
-        //return null;
     }
 
     public void clear() {
