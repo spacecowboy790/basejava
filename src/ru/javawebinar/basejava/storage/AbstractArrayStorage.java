@@ -80,12 +80,4 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract int searchIndex(String uuid);
 
     protected abstract void saveDetail(Resume resume, int index);
-
-    protected void printWrongMessage(String uuid) {
-        System.out.println("Резюме " + uuid + " не существует");
-    }
-
-    protected void printMessageIsExist(Resume resume) {
-        System.out.println("Резюме " + resume.getUuid() + " уже существует");
-    }
 }
