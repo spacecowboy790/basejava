@@ -14,6 +14,7 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
+    private static final String DUMMY = "dummy";
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -35,7 +36,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
-        storage.delete("dummy");
+        storage.delete(UUID_1);
+        storage.get(UUID_1);
     }
 
     @Test
@@ -45,12 +47,13 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(storage.get("dummy"));
+        storage.update(storage.get(DUMMY));
     }
 
     @Test
     public void save() {
-        storage.save(new Resume());
+        storage.save(new Resume(DUMMY));
+        storage.get(DUMMY);
         Assert.assertEquals(4, storage.size());
     }
 
@@ -62,11 +65,10 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverflow() {
-        try {
+        for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT + 1; i++) {
             storage.save(new Resume());
-        } catch (AssertionError assertionError) {
-            Assert.fail("Переполнение произошло раньше времени");
         }
+        Assert.fail("Переполнение произошло раньше времени");
     }
 
     @Test
@@ -76,7 +78,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
-        storage.get("dummy");
+        storage.get(DUMMY);
     }
 
     @Test
