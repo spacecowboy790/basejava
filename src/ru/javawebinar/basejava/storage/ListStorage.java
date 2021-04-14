@@ -1,13 +1,13 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    private ArrayList<Resume> storage = new ArrayList<>();
+    private List<Resume> storage = new ArrayList<>();
 
     @Override
     protected int searchIndex(String uuid) {
@@ -20,41 +20,37 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteDetail(int index) {
+    protected void deleteResume(int index) {
         storage.remove(index);
     }
 
     @Override
-    protected void updateDetail(int index, Resume resume) {
+    protected void updateResume(int index, Resume resume) {
         storage.set(index, resume);
     }
 
     @Override
-    protected void saveDetail(int index, Resume resume) {
-        if (index < 0) {
-            storage.add(resume);
-        } else {
-            throw new ExistStorageException(resume.getUuid());
-        }
+    protected void saveResume(int index, Resume resume) {
+        storage.add(resume);
     }
 
     @Override
-    protected Resume getDetail(int index, String uuid) {
+    protected Resume getResume(int index, String uuid) {
         return storage.get(index);
     }
 
     @Override
-    protected void clearDetail() {
+    public void clear() {
         storage.clear();
     }
 
     @Override
-    protected int sizeDetail() {
+    public int size() {
         return storage.size();
     }
 
     @Override
-    public Resume[] getAllDetail() {
+    public Resume[] getAll() {
         Resume[] resumes = new Resume[storage.size()];
         return storage.toArray(resumes);
     }

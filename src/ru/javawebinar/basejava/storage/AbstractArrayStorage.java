@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -16,45 +15,46 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
-    public void deleteDetail(int index) {
+    public void deleteResume(int index) {
         if (size - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
         size--;
     }
 
-    public void updateDetail(int index, Resume resume) {
+    public void updateResume(int index, Resume resume) {
         storage[index] = resume;
     }
 
-    public void saveDetail(int index, Resume resume) {
+    public void saveResume(int index, Resume resume) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Нет места для сохранения", resume.getUuid());
-        } else if (index < 0) {
-            saveDetailForArrays(resume, index);
-            size++;
         } else {
-            throw new ExistStorageException(resume.getUuid());
+            saveResumeToArray(resume, index);
+            size++;
         }
     }
 
-    public Resume getDetail(int index, String uuid) {
+    @Override
+    public Resume getResume(int index, String uuid) {
         return storage[index];
     }
 
-    public void clearDetail() {
+    @Override
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public int sizeDetail() {
+    @Override
+    public int size() {
         return size;
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] getAllDetail() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    protected abstract void saveDetailForArrays(Resume resume, int index);
+    protected abstract void saveResumeToArray(Resume resume, int index);
 }
