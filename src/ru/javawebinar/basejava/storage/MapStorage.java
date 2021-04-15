@@ -2,41 +2,36 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class ListStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage {
 
-    private List<Resume> storage = new ArrayList<>();
+    private Map<String, Resume> storage = new LinkedHashMap<>();
 
     @Override
     protected int searchIndex(String uuid) {
-        for (int i = 0; i < storage.size(); i++) {
-            if (storage.get(i).getUuid().equals(uuid)) {
-                return i;
-            }
-        }
-        return -1;
+        return (storage.containsKey(uuid)) ? 1 : -1;
     }
 
     @Override
     protected void deleteResume(int index, String uuid) {
-        storage.remove(index);
+        storage.remove(uuid);
     }
 
     @Override
     protected void updateResume(int index, Resume resume) {
-        storage.set(index, resume);
+        saveAndUpdate(resume);
     }
 
     @Override
     protected void saveResume(int index, Resume resume) {
-        storage.add(resume);
+        saveAndUpdate(resume);
     }
 
     @Override
     protected Resume getResume(int index, String uuid) {
-        return storage.get(index);
+        return storage.get(uuid);
     }
 
     @Override
@@ -45,13 +40,16 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
+    public Resume[] getAll() {
+        return storage.values().toArray(new Resume[0]);
+    }
+
+    @Override
     public int size() {
         return storage.size();
     }
 
-    @Override
-    public Resume[] getAll() {
-        Resume[] resumes = new Resume[storage.size()];
-        return storage.toArray(resumes);
+    private void saveAndUpdate(Resume resume) {
+        storage.put(resume.getUuid(), resume);
     }
 }
