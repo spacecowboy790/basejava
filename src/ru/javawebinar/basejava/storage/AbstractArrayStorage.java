@@ -15,7 +15,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
-    public void deleteResume(int index, String uuid) {
+    public void deleteResume(Object searchKey) {
+        int index = (int) searchKey;
         if (size - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
         size--;
     }

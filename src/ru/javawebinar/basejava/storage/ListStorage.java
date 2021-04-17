@@ -20,8 +20,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(int index, String uuid) {
-        storage.remove(index);
+    protected void deleteResume(Object searchKey) {
+        storage.remove((int) searchKey);
     }
 
     @Override
