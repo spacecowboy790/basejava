@@ -21,22 +21,22 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    public void updateResume(int index, Resume resume) {
-        storage[index] = resume;
+    public void updateResume(Object searchKey, Resume resume) {
+        storage[(int) searchKey] = resume;
     }
 
-    public void saveResume(int index, Resume resume) {
+    public void saveResume(Resume resume) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Нет места для сохранения", resume.getUuid());
         } else {
-            saveResumeToArray(resume, index);
+            saveResumeToArray(resume);
             size++;
         }
     }
 
     @Override
-    public Resume getResume(int index, String uuid) {
-        return storage[index];
+    public Resume getResume(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
     @Override
@@ -58,5 +58,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    protected abstract void saveResumeToArray(Resume resume, int index);
+    protected abstract void saveResumeToArray(Resume resume);
 }
