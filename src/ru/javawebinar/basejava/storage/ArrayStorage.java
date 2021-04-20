@@ -18,7 +18,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void saveResumeToArray(Resume resume) {
+    protected void saveResumeToArray(Object searchKey, Resume resume) {
         storage[size] = resume;
     }
 }
