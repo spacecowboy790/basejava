@@ -6,49 +6,52 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    private Object searchKey;
+    private Object findSearchKey;
 
     @Override
     public void delete(String uuid) {
-        deleteResume(isExistResume(uuid));
+        deleteResume(searchKeyIfResumeExist(uuid));
     }
 
     @Override
     public void update(Resume resume) {
-        updateResume(isExistResume(resume.getUuid()), resume);
+        updateResume(searchKeyIfResumeExist(resume.getUuid()), resume);
     }
 
     @Override
     public void save(Resume resume) {
         try {
-            searchKey = isExistResume(resume.getUuid());
-            try {
-                int index = (int) searchKey;
-                if (index < 0) {
-                    throw new NotExistStorageException(resume.getUuid());
-                }
-            } catch (ClassCastException classCastException) {
-                throw new ExistStorageException(resume.getUuid());
-            }
+            searchKeyIfResumeExist(resume.getUuid());
+            throw new ExistStorageException(resume.getUuid());
         } catch (NotExistStorageException notExistStorageException) {
-            saveResume(searchKey, resume);
+            saveResume(findSearchKey, resume);
         }
     }
 
     @Override
     public Resume get(String uuid) {
-        return getResume(isExistResume(uuid));
+        return getResume(searchKeyIfResumeExist(uuid));
     }
 
-    private Object isExistResume(String uuid) {
-        Object index = searchIndex(uuid);
-        if (index != null) {
+    private Object searchKeyIfResumeExist(String uuid) {
+        Object searchKey = searchIndex(uuid);
+        if (searchKey != null) {
+            // сохранение индекса при условии, что индекс не число
+            findSearchKey = searchKey;
             try {
-                return (int) index;
+                int indexForArrays = (int) searchKey;
+                // сохранение индекса при условии, что индекс число (независимо от того, отрицательный или положительный)
+                findSearchKey = indexForArrays;
+                if (indexForArrays >= 0) {
+                    // возвращение числового индекса, если он положительный, т.е. резюме существует
+                    return findSearchKey;
+                }
             } catch (ClassCastException classCastException) {
-                return index;
+                // возвращение нечислового индекса
+                return findSearchKey;
             }
         }
+        // исключение кидается при условии, что индекс null или отрицательное число
         throw new NotExistStorageException(uuid);
     }
 
