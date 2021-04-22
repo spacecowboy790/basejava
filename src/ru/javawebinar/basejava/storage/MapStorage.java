@@ -9,7 +9,7 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> storage = new LinkedHashMap<>();
 
     @Override
-    protected Object searchIndex(Object searchKey) {
+    protected Object searchKey(Object searchKey) {
         return storage.containsKey(searchKey) ? searchKey : null;
     }
 
