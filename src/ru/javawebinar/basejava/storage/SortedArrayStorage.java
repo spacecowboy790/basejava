@@ -13,6 +13,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
+    protected boolean isResumeExist(Object searchKey) {
+        return (int) searchKey >= 0;
+    }
+
+    @Override
     protected void saveResumeToArray(Object searchKey, Resume resume) {
         int index = (int) searchKey;
         index = -index - 1;

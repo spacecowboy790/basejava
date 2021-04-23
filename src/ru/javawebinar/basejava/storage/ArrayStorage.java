@@ -18,6 +18,11 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
+    protected boolean isResumeExist(Object searchKey) {
+        return searchKey != null;
+    }
+
+    @Override
     protected void saveResumeToArray(Object searchKey, Resume resume) {
         storage[size] = resume;
     }

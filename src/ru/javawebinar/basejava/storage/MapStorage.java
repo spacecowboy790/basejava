@@ -14,6 +14,11 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected boolean isResumeExist(Object searchKey) {
+        return searchKey != null;
+    }
+
+    @Override
     protected void deleteResume(Object searchKey) {
         storage.remove((String) searchKey);
     }
