@@ -8,22 +8,17 @@ import ru.javawebinar.basejava.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected Object searchKey(Object searchKey) {
+    protected Integer searchKey(String searchKey) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(searchKey)) {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 
     @Override
-    protected boolean isResumeExist(Object searchKey) {
-        return searchKey != null;
-    }
-
-    @Override
-    protected void saveResumeToArray(Object searchKey, Resume resume) {
+    protected void saveResumeToArray(int index, Resume resume) {
         storage[size] = resume;
     }
 }

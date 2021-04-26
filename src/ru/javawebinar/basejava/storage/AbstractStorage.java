@@ -26,23 +26,23 @@ public abstract class AbstractStorage implements Storage {
         return getResume(getSearchKeyIfResumeExist(uuid));
     }
 
-    private Object getSearchKeyIfResumeExist(Object searchKeyForAction) {
-        Object searchKeyIfResumeExist = searchKey(searchKeyForAction);
-        if (isResumeExist(searchKeyIfResumeExist)) {
-            return searchKeyIfResumeExist;
+    private Object getSearchKeyIfResumeExist(String uuid) {
+        Object searchKey = searchKey(uuid);
+        if (isResumeExist(searchKey)) {
+            return searchKey;
         }
-        throw new NotExistStorageException((String) searchKeyForAction);
+        throw new NotExistStorageException(uuid);
     }
 
-    private Object getSearchKeyIfResumeNotExist(Object searchKeyForAction) {
-        Object searchKeyIfResumeNotExist = searchKey(searchKeyForAction);
-        if (!isResumeExist(searchKeyIfResumeNotExist)) {
-            return searchKeyIfResumeNotExist;
+    private Object getSearchKeyIfResumeNotExist(String uuid) {
+        Object searchKey = searchKey(uuid);
+        if (!isResumeExist(searchKey)) {
+            return searchKey;
         }
-        throw new ExistStorageException((String) searchKeyForAction);
+        throw new ExistStorageException(uuid);
     }
 
-    protected abstract Object searchKey(Object searchKey);
+    protected abstract Object searchKey(String searchKey);
 
     protected abstract boolean isResumeExist(Object searchKey);
 

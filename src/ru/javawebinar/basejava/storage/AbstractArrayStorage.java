@@ -15,6 +15,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
+    @Override
+    protected boolean isResumeExist(Object searchKey) {
+        return (int) searchKey >= 0;
+    }
+
     public void deleteResume(Object searchKey) {
         int index = (int) searchKey;
         if (size - 1 - index >= 0) System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
@@ -29,7 +34,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Нет места для сохранения", resume.getUuid());
         } else {
-            saveResumeToArray(searchKey, resume);
+            saveResumeToArray((int) searchKey, resume);
             size++;
         }
     }
@@ -58,5 +63,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    protected abstract void saveResumeToArray(Object searchKey, Resume resume);
+    protected abstract void saveResumeToArray(int searchKey, Resume resume);
 }
