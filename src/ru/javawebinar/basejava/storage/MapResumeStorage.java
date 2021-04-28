@@ -4,13 +4,13 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
 
     private Map<String, Resume> storage = new LinkedHashMap<>();
 
     @Override
     protected Object searchKey(String searchKey) {
-        return storage.containsKey(searchKey) ? searchKey : null;
+        return storage.get(searchKey);
     }
 
     @Override
@@ -20,12 +20,12 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected void deleteResume(Object searchKey) {
-        storage.remove((String) searchKey);
+        storage.remove(((Resume) searchKey).getUuid());
     }
 
     @Override
     protected void updateResume(Object searchKey, Resume resume) {
-        storage.replace((String) searchKey, resume);
+        storage.replace(((Resume) searchKey).getUuid(), resume);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected Resume getResume(Object searchKey) {
-        return storage.get((String) searchKey);
+        return (Resume) searchKey;
     }
 
     @Override

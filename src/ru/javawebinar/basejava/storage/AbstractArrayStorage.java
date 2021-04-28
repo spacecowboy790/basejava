@@ -5,7 +5,6 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,10 +59,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> resumes = new ArrayList<>(Arrays.asList(Arrays.copyOf(storage, size)));
-        Collections.sort(resumes);
-        return resumes;
+    public List<Resume> getResumes() {
+        return new ArrayList<>(Arrays.asList(Arrays.copyOf(storage, size)));
     }
 
     protected abstract void saveResumeToArray(int searchKey, Resume resume);
