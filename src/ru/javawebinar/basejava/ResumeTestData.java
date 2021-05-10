@@ -13,13 +13,13 @@ public class ResumeTestData {
         Resume resume = new Resume("Григорий Кислин");
 
         // заполнение контактов
-        resume.addPhone("+7(921) 855-0482");
-        resume.addSkype("grigory.kislin");
-        resume.addEmail("gkislin@yandex.ru");
-        resume.addLinkedInProfile("https://www.linkedin.com/in/gkislin");
-        resume.addGitHubProfile("https://github.com/gkislin");
-        resume.addStackoverflowProfile("https://stackoverflow.com/users/548473/grigory-kislin");
-        resume.addHomePage("http://gkislin.ru/");
+        resume.addContact(ContactType.PHONE, "+7(921) 855-0482");
+        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+        resume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
+        resume.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
+        resume.addContact(ContactType.HOMEPAGE, "http://gkislin.ru/");
 
         // заполнение секции Позиция
         String objectiveSectionDescription = "Ведущий стажировок и корпоративного обучения по Java Web и " +

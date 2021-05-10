@@ -37,32 +37,8 @@ public class Resume implements Comparable<Resume> {
         return sections;
     }
 
-    public void addPhone(String phone) {
-        contacts.put(ContactType.PHONE, phone);
-    }
-
-    public void addSkype(String skype) {
-        contacts.put(ContactType.SKYPE, skype);
-    }
-
-    public void addEmail(String email) {
-        contacts.put(ContactType.EMAIL, email);
-    }
-
-    public void addLinkedInProfile(String linkedInProfilePage) {
-        contacts.put(ContactType.LINKEDIN, linkedInProfilePage);
-    }
-
-    public void addGitHubProfile(String gitHubProfilePage) {
-        contacts.put(ContactType.GITHUB, gitHubProfilePage);
-    }
-
-    public void addStackoverflowProfile(String stackoverflowProfilePage) {
-        contacts.put(ContactType.STACKOVERFLOW, stackoverflowProfilePage);
-    }
-
-    public void addHomePage(String homePageLink) {
-        contacts.put(ContactType.HOMEPAGE, homePageLink);
+    public void addContact(ContactType contactType, String contact) {
+        contacts.put(contactType, contact);
     }
 
     public void addSection(SectionType sectionType, AbstractSection abstractSection) {
