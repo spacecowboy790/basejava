@@ -37,31 +37,6 @@ public class Resume implements Comparable<Resume> {
         return sections;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Resume resume = (Resume) o;
-
-        return uuid.equals(resume.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return uuid.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return uuid;
-    }
-
-    @Override
-    public int compareTo(Resume resume) {
-        return fullName.equals(resume.fullName) ? uuid.compareTo(resume.uuid) : fullName.compareTo(resume.fullName);
-    }
-
     public void addPhone(String phone) {
         contacts.put(ContactType.PHONE, phone);
     }
@@ -90,19 +65,33 @@ public class Resume implements Comparable<Resume> {
         contacts.put(ContactType.HOMEPAGE, homePageLink);
     }
 
-    public void addObjectiveSection(TextSection objectiveSectionDescription) {
-        sections.put(SectionType.OBJECTIVE, objectiveSectionDescription);
+    public void addSection(SectionType sectionType, AbstractSection abstractSection) {
+        sections.put(sectionType, abstractSection);
     }
 
-    public void addPersonalSection(TextSection personalSectionDescription) {
-        sections.put(SectionType.PERSONAL, personalSectionDescription);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Resume resume = (Resume) o;
+
+        return uuid.equals(resume.uuid) && fullName.equals(resume.fullName) &&
+                contacts.equals(resume.contacts) && sections.equals(resume.sections);
     }
 
-    public void addQualificationsSection(SkillsSection qualificationsSectionDescription) {
-        sections.put(SectionType.QUALIFICATIONS, qualificationsSectionDescription);
+    @Override
+    public int hashCode() {
+        return uuid.hashCode() + fullName.hashCode() + contacts.hashCode() + sections.hashCode();
     }
 
-    public void addAchievementSection(SkillsSection achievementSectionDescription) {
-        sections.put(SectionType.ACHIEVEMENT, achievementSectionDescription);
+    @Override
+    public String toString() {
+        return uuid;
+    }
+
+    @Override
+    public int compareTo(Resume resume) {
+        return fullName.equals(resume.fullName) ? uuid.compareTo(resume.uuid) : fullName.compareTo(resume.fullName);
     }
 }

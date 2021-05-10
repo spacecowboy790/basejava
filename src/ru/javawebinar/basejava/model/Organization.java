@@ -29,4 +29,9 @@ public class Organization {
     public void setSite(String site) {
         this.site = site;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + beginDate + " " + endDate + " " + description + " " + site;
+    }
 }

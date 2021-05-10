@@ -2,9 +2,9 @@ package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
-public class OrganizationsSection {
+public class OrganizationsSection extends AbstractSection {
 
-    List<Organization> organizations;
+    private List<Organization> organizations;
 
     public OrganizationsSection(List<Organization> organizations) {
         this.organizations = organizations;
