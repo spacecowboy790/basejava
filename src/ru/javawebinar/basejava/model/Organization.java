@@ -1,37 +1,32 @@
 package ru.javawebinar.basejava.model;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class Organization {
 
     private String name;
-    private LocalDate beginDate;
-    private LocalDate endDate;
-    private String description;
     private String site;
+    private List<Position> positions;
 
     public Organization(String name) {
         this.name = name;
-    }
-
-    public void setBeginDate(LocalDate beginDate) {
-        this.beginDate = beginDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public void setSite(String site) {
         this.site = site;
     }
 
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
+    }
+
     @Override
     public String toString() {
-        return name + " " + beginDate + " " + endDate + " " + description + " " + site;
+        StringBuilder positionsString = new StringBuilder();
+        for (Position position : positions) {
+            positionsString.append(position.getDescription()).append(" ")
+            .append(position.getBeginDate()).append(" ").append(position.getEndDate()).append(" ");
+         }
+        return name + " " + site + " " + positionsString;
     }
 }

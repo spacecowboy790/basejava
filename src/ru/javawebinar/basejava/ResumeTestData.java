@@ -10,7 +10,17 @@ import java.util.Map;
 public class ResumeTestData {
 
     public static void main(String[] args) {
-        Resume resume = new Resume("Григорий Кислин");
+        Resume resume = createResume("123", "Григорий Кислин");
+
+        // вывод данных
+        Map<ContactType, String> contacts = resume.getContacts();
+        contacts.forEach((k, v) -> System.out.println("ContactType: " + k + ", Contact: " + v));
+        Map<SectionType, AbstractSection> sections = resume.getSections();
+        sections.forEach((k, v) -> System.out.println("SectionType: " + k + ", Section: " + v));
+    }
+
+    public static Resume createResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
 
         // заполнение контактов
         resume.addContact(ContactType.PHONE, "+7(921) 855-0482");
@@ -52,16 +62,24 @@ public class ResumeTestData {
 
         // заполнение секции Опыт работы
         Organization experienceOrganization1 = new Organization("Java Online Projects");
-        experienceOrganization1.setBeginDate(LocalDate.parse("2013-10-01"));
-        experienceOrganization1.setEndDate(LocalDate.now());
-        experienceOrganization1.setDescription("Автор проекта." + '\t' + "Создание, организация и проведение Java онлайн проектов и стажировок.");
         experienceOrganization1.setSite("https://javaops.ru/");
 
+        List<Position> positionsOfExperienceOrganization1 = new ArrayList<>();
+        Position positionOneOfExperienceOrganization1 = new Position("\"Автор проекта.\" + '\\t' + \"Создание, организация и проведение Java онлайн проектов и стажировок.\"");
+        positionOneOfExperienceOrganization1.setBeginDate(LocalDate.parse("2013-10-01"));
+        positionOneOfExperienceOrganization1.setEndDate(LocalDate.now());
+        positionsOfExperienceOrganization1.add(positionOneOfExperienceOrganization1);
+        experienceOrganization1.setPositions(positionsOfExperienceOrganization1);
+
         Organization experienceOrganization2 = new Organization("Wrike");
-        experienceOrganization2.setBeginDate(LocalDate.parse("2014-10-01"));
-        experienceOrganization2.setEndDate(LocalDate.parse("2016-01-01"));
-        experienceOrganization2.setDescription("Старший разработчик (backend)" + '\t' + "Проектирование и разработка онлайн платформы управления проектами Wrike...");
         experienceOrganization2.setSite("https://www.wrike.com/");
+
+        List<Position> positionsOfExperienceOrganization2 = new ArrayList<>();
+        Position positionOneOfExperienceOrganization2 = new Position("Старший разработчик (backend)" + '\t' + "Проектирование и разработка онлайн платформы управления проектами Wrike...");
+        positionOneOfExperienceOrganization2.setBeginDate(LocalDate.parse("2014-10-01"));
+        positionOneOfExperienceOrganization2.setEndDate(LocalDate.parse("2016-01-01"));
+        positionsOfExperienceOrganization2.add(positionOneOfExperienceOrganization2);
+        experienceOrganization2.setPositions(positionsOfExperienceOrganization2);
 
         List<Organization> experienceOrganizationsDescription = new ArrayList<>();
         experienceOrganizationsDescription.add(experienceOrganization1);
@@ -73,29 +91,47 @@ public class ResumeTestData {
 
         // заполнение секции Образование
         Organization studyOrganization1 = new Organization("Coursera");
-        studyOrganization1.setBeginDate(LocalDate.parse("2013-03-01"));
-        studyOrganization1.setEndDate(LocalDate.parse("2013-05-01"));
-        studyOrganization1.setDescription("\"Functional Programming Principles in Scala\" by Martin Odersky");
         studyOrganization1.setSite("https://www.coursera.org/learn/progfun1");
 
+        List<Position> positionsOfStudyOrganization1 = new ArrayList<>();
+        Position positionOneOfStudyOrganization1 = new Position("\"Functional Programming Principles in Scala\" by Martin Odersky");
+        positionOneOfStudyOrganization1.setBeginDate(LocalDate.parse("2013-03-01"));
+        positionOneOfStudyOrganization1.setEndDate(LocalDate.parse("2013-05-01"));
+        positionsOfStudyOrganization1.add(positionOneOfStudyOrganization1);
+        studyOrganization1.setPositions(positionsOfStudyOrganization1);
+
         Organization studyOrganization2 = new Organization("Luxoft");
-        studyOrganization2.setBeginDate(LocalDate.parse("2011-03-01"));
-        studyOrganization2.setEndDate(LocalDate.parse("2011-04-01"));
-        studyOrganization2.setDescription("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
         studyOrganization2.setSite("http://www.luxoft-training.ru/training/catalog/course.html?ID=22366");
+
+        List<Position> positionsOfStudyOrganization2 = new ArrayList<>();
+        Position positionOneOfStudyOrganization2 = new Position("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
+        positionOneOfStudyOrganization2.setBeginDate(LocalDate.parse("2011-03-01"));
+        positionOneOfStudyOrganization2.setEndDate(LocalDate.parse("2011-04-01"));
+        positionsOfStudyOrganization2.add(positionOneOfStudyOrganization2);
+        studyOrganization2.setPositions(positionsOfStudyOrganization2);
+
+        Organization studyOrganization3 = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики");
+        studyOrganization3.setSite("https://itmo.ru/ru/");
+
+        List<Position> positionsOfStudyOrganization3 = new ArrayList<>();
+        Position positionOneOfStudyOrganization3 = new Position("Инженер (программист Fortran, C)");
+        positionOneOfStudyOrganization3.setBeginDate(LocalDate.parse("1987-09-01"));
+        positionOneOfStudyOrganization3.setEndDate(LocalDate.parse("1993-07-01"));
+        Position positionTwoOfStudyOrganization3 = new Position("Аспирантура (программист С, С++)");
+        positionTwoOfStudyOrganization3.setBeginDate(LocalDate.parse("1993-09-01"));
+        positionTwoOfStudyOrganization3.setEndDate(LocalDate.parse("1996-07-01"));
+        positionsOfStudyOrganization3.add(positionOneOfStudyOrganization3);
+        positionsOfStudyOrganization3.add(positionTwoOfStudyOrganization3);
+        studyOrganization3.setPositions(positionsOfStudyOrganization3);
 
         List<Organization> studyOrganizationsDescription = new ArrayList<>();
         studyOrganizationsDescription.add(studyOrganization1);
         studyOrganizationsDescription.add(studyOrganization2);
+        studyOrganizationsDescription.add(studyOrganization3);
 
         AbstractSection studyOrganizations = new OrganizationsSection(studyOrganizationsDescription);
         resume.addSection(SectionType.EDUCATION, studyOrganizations);
 
-
-        // вывод данных
-        Map<ContactType, String> contacts = resume.getContacts();
-        contacts.forEach((k, v) -> System.out.println("ContactType: " + k + ", Contact: " + v));
-        Map<SectionType, AbstractSection> sections = resume.getSections();
-        sections.forEach((k, v) -> System.out.println("SectionType: " + k + ", Section: " + v));
+        return resume;
     }
 }
