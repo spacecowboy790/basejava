@@ -21,12 +21,28 @@ public class Organization {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Organization organization = (Organization) o;
+
+        return name.equals(organization.name) && site.equals(organization.site) &&
+                positions.equals(organization.positions);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() + site.hashCode() + positions.hashCode();
+    }
+
+    @Override
     public String toString() {
         StringBuilder positionsString = new StringBuilder();
         for (Position position : positions) {
             positionsString.append(position.getDescription()).append(" ")
-            .append(position.getBeginDate()).append(" ").append(position.getEndDate()).append(" ");
-         }
+                    .append(position.getBeginDate()).append(" ").append(position.getEndDate()).append(" ");
+        }
         return name + " " + site + " " + positionsString;
     }
 }

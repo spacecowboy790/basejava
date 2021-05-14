@@ -29,11 +29,8 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        //storage.save(new Resume(UUID_3, "UUID_3_name"));
         storage.save(ResumeTestData.createResume(UUID_3, "UUID_3_name"));
-        //storage.save(new Resume(UUID_1, "UUID_1_name"));
         storage.save(ResumeTestData.createResume(UUID_1, "UUID_1_name"));
-        //storage.save(new Resume(UUID_2, "UUID_2_name"));
         storage.save(ResumeTestData.createResume(UUID_2, "UUID_2_name"));
     }
 
@@ -56,20 +53,17 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() {
         Resume resume = ResumeTestData.createResume(UUID_1, "UUID_1_name");
-        //Resume resume = new Resume(UUID_1, "UUID_1_name");
         storage.update(resume);
         assertSame(resume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        //storage.update(new Resume(DUMMY, "DUMMY_name"));
         storage.update(ResumeTestData.createResume(DUMMY, "DUMMY_name"));
     }
 
     @Test
     public void save() {
-        //Resume resume = new Resume(DUMMY, "DUMMY_name");
         Resume resume = ResumeTestData.createResume(DUMMY, "DUMMY_name");
         storage.save(resume);
         assertEquals(4, storage.size());
@@ -78,19 +72,12 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        //storage.save(new Resume(UUID_1, "UUID_1_name"));
         storage.save(ResumeTestData.createResume(UUID_1, "UUID_1_name"));
     }
 
     @Test
     public void get() {
-        //assertEquals(new Resume(UUID_1, "UUID_1_name"), storage.get(UUID_1));
         Resume resume = ResumeTestData.createResume(UUID_1, "UUID_1_name");
-//        Resume resume = new Resume(UUID_1, "UUID_1_name");
-//        System.out.println(resume.equals(storage.get(UUID_1)));
-//        System.out.println(resume.hashCode());
-//        System.out.println(storage.get(UUID_1).hashCode());
-//        System.out.println(resume.hashCode() == storage.get(UUID_1).hashCode());
         assertEquals(resume, storage.get(UUID_1));
     }
 
@@ -113,11 +100,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAll() {
         List<Resume> resumes = new ArrayList<>();
-        //resumes.add(new Resume(UUID_1, "UUID_1_name"));
         resumes.add(ResumeTestData.createResume(UUID_1, "UUID_1_name"));
-        //resumes.add(new Resume(UUID_2, "UUID_2_name"));
         resumes.add(ResumeTestData.createResume(UUID_2, "UUID_2_name"));
-        //resumes.add(new Resume(UUID_3, "UUID_3_name"));
         resumes.add(ResumeTestData.createResume(UUID_3, "UUID_3_name"));
         assertEquals(resumes, storage.getAllSorted());
     }
