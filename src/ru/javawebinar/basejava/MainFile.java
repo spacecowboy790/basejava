@@ -32,18 +32,21 @@ public class MainFile {
         }
 
         System.out.println("\n\n\n");
-        listOfFilesWithRecursion("D:\\Java\\basejava");
+        listOfFilesWithRecursion("", "D:\\Java\\basejava");
     }
 
-    public static void listOfFilesWithRecursion(String path) {
+    public static void listOfFilesWithRecursion(String indent, String path) {
         File dir = new File(path);
         File[] list = dir.listFiles();
 
         if (list != null) {
+            indent += " ";
             for (File file : list) {
-                System.out.println(file.getName());
                 if (file.isDirectory()) {
-                    listOfFilesWithRecursion(file.getAbsolutePath());
+                    System.out.println(indent + file.getName());
+                    listOfFilesWithRecursion(indent, file.getAbsolutePath());
+                } else {
+                    System.out.println(indent + file.getName());
                 }
             }
         }
