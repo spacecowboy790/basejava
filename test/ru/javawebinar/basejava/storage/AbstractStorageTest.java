@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIR = new File("D:\\Java\\basejava\\storage");
+    protected static final String STORAGE_STR = "D:\\Java\\basejava\\storage";
 
     protected Storage storage;
 
@@ -58,7 +59,6 @@ public abstract class AbstractStorageTest {
         Resume resume = ResumeTestData.createResume(UUID_1, "UUID_1_name");
         storage.update(resume);
         assertTrue(resume.equals(storage.get(UUID_1)));
-        //assertSame(resume, );
     }
 
     @Test(expected = NotExistStorageException.class)
