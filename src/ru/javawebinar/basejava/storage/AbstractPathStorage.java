@@ -7,13 +7,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
-    private Path directory;
+    protected Path directory;
 
     protected AbstractPathStorage(String dir) {
         directory = Paths.get(dir);
@@ -25,7 +27,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path searchKey(String searchKey) {
-        return Paths.get(searchKey);
+        return Paths.get(directory.toAbsolutePath() + "/" + searchKey);
     }
 
     @Override
@@ -53,7 +55,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected void saveResume(Path path, Resume resume) {
-        Path newPath = Paths.get(path.toUri());
+        Path newPath = path;
         if (Files.exists(newPath)) {
             throw new StorageException("Couldn't create path ", path.getFileName().toString());
         }
@@ -71,7 +73,16 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getResumes() {
-        return null;
+        List<Resume> resumes = new ArrayList<>();
+        try {
+            List<Path> list = Files.walk(directory).filter(Files::isRegularFile).collect(Collectors.toList());
+            for (Path path : list) {
+                resumes.add(getResume(path));
+            }
+        } catch (IOException e) {
+            throw new StorageException("Directory read error", null);
+        }
+        return resumes;
     }
 
     @Override
