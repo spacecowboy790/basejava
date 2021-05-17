@@ -20,7 +20,6 @@ public class ObjectStreamPathStorage extends AbstractPathStorage {
             oos.writeObject(resume);
             Files.write(path, baos.toByteArray());
         }
-
     }
 
     @Override
