@@ -5,14 +5,14 @@ import org.junit.Test;
 import ru.javawebinar.basejava.ResumeTestData;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
 
@@ -37,15 +37,11 @@ public abstract class AbstractStorageTest {
         storage.save(ResumeTestData.createResume(UUID_2, "UUID_2_name"));
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_1);
         assertEquals(2, storage.size());
-        try {
-            storage.get(UUID_1);
-        } catch (StorageException exception) {
-            System.out.println("Удаление резюме прошло успешно");
-        }
+        storage.get(UUID_1);
     }
 
     @Test(expected = NotExistStorageException.class)

@@ -1,13 +1,25 @@
 package ru.javawebinar.basejava.model;
 
-public class TextSection extends AbstractSection {
+import java.util.Objects;
+
+public class TextSection extends Section {
 
     private static final long serialVersionUID = 1L;
 
-    private String text;
+    private final String content;
 
-    public TextSection(String text) {
-        this.text = text;
+    public TextSection(String content) {
+        Objects.requireNonNull(content, "content must not be null");
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    @Override
+    public String toString() {
+        return content;
     }
 
     @Override
@@ -15,18 +27,14 @@ public class TextSection extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TextSection textSection = (TextSection) o;
+        TextSection that = (TextSection) o;
 
-        return text.equals(textSection.text);
+        return content.equals(that.content);
+
     }
 
     @Override
     public int hashCode() {
-        return text.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return text;
+        return content.hashCode();
     }
 }
