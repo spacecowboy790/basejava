@@ -9,7 +9,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     private Map<String, Resume> storage = new LinkedHashMap<>();
 
     @Override
-    protected Resume searchKey(String searchKey) {
+    protected Resume getSearchKey(String searchKey) {
         return storage.get(searchKey);
     }
 

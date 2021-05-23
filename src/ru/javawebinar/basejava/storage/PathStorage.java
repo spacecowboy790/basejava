@@ -2,34 +2,33 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.Strategy;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
 
-    private WriteAndReadResumeStrategy writeAndReadResumeStrategy;
+    private Strategy strategy;
     private Path directory;
 
-    public PathStorage(WriteAndReadResumeStrategy writeAndReadResumeStrategy, String dir) {
+    public PathStorage(Strategy strategy, String dir) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }
-        this.writeAndReadResumeStrategy = writeAndReadResumeStrategy;
+        this.strategy = strategy;
     }
 
     @Override
-    protected Path searchKey(String searchKey) {
-        return Paths.get(directory.toAbsolutePath() + "/" + searchKey);
+    protected Path getSearchKey(String searchKey) {
+        return directory.resolve(searchKey);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateResume(Path path, Resume resume) {
         try {
-            writeResume(resume, path);
+            strategy.writeResume(path, resume);
         } catch (IOException e) {
             throw new StorageException("Path write error", path.getFileName().toString(), e);
         }
@@ -57,17 +56,16 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected void saveResume(Path path, Resume resume) {
-        Path newPath = path;
-        if (Files.exists(newPath)) {
+        if (Files.exists(path)) {
             throw new StorageException("Couldn't create path ", path.getFileName().toString());
         }
-        updateResume(newPath, resume);
+        updateResume(path, resume);
     }
 
     @Override
     protected Resume getResume(Path path) {
         try {
-            return readResume(path);
+            return strategy.readResume(path);
         } catch (IOException e) {
             throw new StorageException("Path read error", path.getFileName().toString(), e);
         }
@@ -75,43 +73,24 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getResumes() {
-        List<Resume> resumes = new ArrayList<>();
-        try {
-            List<Path> list = Files.walk(directory).filter(Files::isRegularFile).collect(Collectors.toList());
-            for (Path path : list) {
-                resumes.add(getResume(path));
-            }
-        } catch (IOException e) {
-            throw new StorageException("Directory read error", null);
-        }
-        return resumes;
+        return getFilesFromDirectory().stream().map(this::getResume).collect(Collectors.toList());
     }
 
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::deleteResume);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
-        }
+        getFilesFromDirectory().forEach(this::deleteResume);
     }
 
     @Override
     public int size() {
-        long size = 0;
-        try (Stream<Path> files = Files.list(directory)) {
-            size = files.count();
+        return getFilesFromDirectory().size();
+    }
+
+    protected List<Path> getFilesFromDirectory() {
+        try {
+            return Files.list(directory).filter(Files::isRegularFile).collect(Collectors.toList());
         } catch (IOException e) {
             throw new StorageException("Directory read error", null);
         }
-        return (int) size;
-    }
-
-    public void writeResume(Resume resume, Path path) throws IOException {
-        writeAndReadResumeStrategy.writeResume(resume, path);
-    }
-
-    public Resume readResume(Path path) throws IOException {
-        return writeAndReadResumeStrategy.readResume(path);
     }
 }
