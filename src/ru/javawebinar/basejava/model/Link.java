@@ -3,7 +3,6 @@ package ru.javawebinar.basejava.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
-import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Link implements Serializable {
@@ -17,9 +16,8 @@ public class Link implements Serializable {
     }
 
     public Link(String name, String url) {
-        Objects.requireNonNull(name, "name must not be null");
-        this.name = name;
-        this.url = url;
+        this.name = name == null ? "" : name;
+        this.url = url == null ? "" : url;
     }
 
     public String getName() {

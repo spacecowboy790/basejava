@@ -66,6 +66,7 @@ public class ResumeTestData {
         List<Organization.Position> positionsOfExperienceOrganizationOne = new ArrayList<>();
         positionsOfExperienceOrganizationOne.add(positionOneOfExperienceOrganizationOne);
         Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", "https://javaops.ru/");
+        //Link linkOfExperienceOrganizationOne = new Link(null, null);
         Organization experienceOrganizationOne = new Organization(linkOfExperienceOrganizationOne, positionsOfExperienceOrganizationOne);
 
         Organization.Position positionOneOfExperienceOrganizationTwo =
