@@ -65,12 +65,16 @@ public class ResumeTestData {
                 new Organization.Position(2013, Month.OCTOBER, "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
         List<Organization.Position> positionsOfExperienceOrganizationOne = new ArrayList<>();
         positionsOfExperienceOrganizationOne.add(positionOneOfExperienceOrganizationOne);
-        Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", "https://javaops.ru/");
+        //Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", "https://javaops.ru/");
         //Link linkOfExperienceOrganizationOne = new Link(null, null);
+        Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", null);
+
         Organization experienceOrganizationOne = new Organization(linkOfExperienceOrganizationOne, positionsOfExperienceOrganizationOne);
 
+//        Organization.Position positionOneOfExperienceOrganizationTwo =
+//                new Organization.Position(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы...");
         Organization.Position positionOneOfExperienceOrganizationTwo =
-                new Organization.Position(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы...");
+                new Organization.Position(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)", null);
         List<Organization.Position> positionsOfExperienceOrganizationTwo = new ArrayList<>();
         positionsOfExperienceOrganizationTwo.add(positionOneOfExperienceOrganizationTwo);
         Link linkOfExperienceOrganizationTwo = new Link("Wrike", "https://www.wrike.com/");

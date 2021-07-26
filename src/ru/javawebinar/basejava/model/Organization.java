@@ -90,7 +90,7 @@ public class Organization implements Serializable {
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
         public LocalDate getStartDate() {
@@ -106,7 +106,7 @@ public class Organization implements Serializable {
         }
 
         public String getDescription() {
-            return description;
+            return description == null ? null : description;
         }
 
         @Override
