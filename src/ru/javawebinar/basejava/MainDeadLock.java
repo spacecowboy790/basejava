@@ -24,9 +24,9 @@ public class MainDeadLock {
 
     public static void makeDeadLock(Lock lock1, Lock lock2) {
         lock1.lock();
-        System.out.println(lock1 + " — захвачен");
+        System.out.println("Поток " + Thread.currentThread().getName() + " захватил ресурс " + lock1);
         lock2.lock();
-        System.out.println(lock2 + " — захвачен");
+        System.out.println("Поток " + Thread.currentThread().getName() + " захватил ресурс " + lock2);
 
         try {
             Thread.sleep(3000);
@@ -35,9 +35,9 @@ public class MainDeadLock {
         }
 
         lock2.lock();
-        System.out.println(lock2 + " — захвачен");
+        System.out.println("Поток " + Thread.currentThread().getName() + " захватил ресурс " + lock2);
         lock1.lock();
-        System.out.println(lock1 + " — захвачен");
+        System.out.println("Поток " + Thread.currentThread().getName() + " захватил ресурс " + lock1);
 
         lock1.unlock();
         lock2.unlock();
