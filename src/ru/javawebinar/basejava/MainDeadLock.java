@@ -27,22 +27,5 @@ public class MainDeadLock {
                 System.out.println("Поток " + threadName + " захватил ресурс " + lock2);
             }
         }
-
-        synchronized (lock2) {
-            String threadName = Thread.currentThread().getName();
-            System.out.println("Поток " + threadName + " захватил ресурс " + lock2);
-
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println("Поток " + threadName + " ожидает захвата ресурса " + lock1);
-
-            synchronized (lock1) {
-                System.out.println("Поток " + threadName + " захватил ресурс " + lock1);
-            }
-        }
     }
 }
