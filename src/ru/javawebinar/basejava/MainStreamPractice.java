@@ -3,7 +3,7 @@ package ru.javawebinar.basejava;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 public class MainStreamPractice {
 
@@ -22,20 +22,13 @@ public class MainStreamPractice {
     }
 
     public static int minValue(int[] values) {
-        int[] arr = Arrays.stream(values).distinct().sorted().toArray();
-        return IntStream.range(0, arr.length)
-                .map(i -> (int) (Math.pow(10, arr.length - 1 - i) * arr[i]))
-                .sum();
+        return Arrays.stream(values).distinct().sorted().reduce(0, (a, b) -> a * 10 + b);
     }
 
     public static List<Integer> oddOrEven(List<Integer> integers) {
         int sum = integers.stream().mapToInt(Integer::intValue).sum();
-        if (sum % 2 != 0) {
-            integers.removeIf(i -> i % 2 != 0);
-        }
-        else {
-            integers.removeIf(i -> i % 2 == 0);
-        }
-        return integers;
+        return sum % 2 == 0
+                ? integers.stream().filter(n -> n % 2 != 0).collect(Collectors.toList())
+                : integers.stream().filter(n -> n % 2 == 0).collect(Collectors.toList());
     }
 }
