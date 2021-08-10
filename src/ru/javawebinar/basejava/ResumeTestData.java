@@ -23,16 +23,16 @@ public class ResumeTestData {
         Resume resume = new Resume(uuid, fullName);
 
         // заполнение контактов
-        resume.addContact(ContactType.MOBILE, "+7(921) 855-0482");
-        resume.addContact(ContactType.SKYPE, "grigory.kislin");
-        resume.addContact(ContactType.MAIL, "gkislin@yandex.ru");
-        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
-        resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
-        resume.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
-        resume.addContact(ContactType.HOME_PAGE, "http://gkislin.ru/");
+//        resume.addContact(ContactType.MOBILE, "+7(921) 855-0482");
+//        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+//        resume.addContact(ContactType.MAIL, "gkislin@yandex.ru");
+//        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+//        resume.addContact(ContactType.GITHUB, "https://github.com/gkislin");
+//        resume.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473/grigory-kislin");
+//        resume.addContact(ContactType.HOME_PAGE, "http://gkislin.ru/");
 
         // заполнение секций
-        addSections(resume);
+//        addSections(resume);
 
         return resume;
     }
@@ -65,16 +65,16 @@ public class ResumeTestData {
                 new Organization.Position(2013, Month.OCTOBER, "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.");
         List<Organization.Position> positionsOfExperienceOrganizationOne = new ArrayList<>();
         positionsOfExperienceOrganizationOne.add(positionOneOfExperienceOrganizationOne);
-        //Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", "https://javaops.ru/");
-        //Link linkOfExperienceOrganizationOne = new Link(null, null);
-        Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", null);
+        Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", "https://javaops.ru/");
+//        Link linkOfExperienceOrganizationOne = new Link(null, null);
+//        Link linkOfExperienceOrganizationOne = new Link("Java Online Projects", null);
 
         Organization experienceOrganizationOne = new Organization(linkOfExperienceOrganizationOne, positionsOfExperienceOrganizationOne);
 
-//        Organization.Position positionOneOfExperienceOrganizationTwo =
-//                new Organization.Position(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы...");
         Organization.Position positionOneOfExperienceOrganizationTwo =
-                new Organization.Position(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)", null);
+                new Organization.Position(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы...");
+//        Organization.Position positionOneOfExperienceOrganizationTwo =
+//                new Organization.Position(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)", null);
         List<Organization.Position> positionsOfExperienceOrganizationTwo = new ArrayList<>();
         positionsOfExperienceOrganizationTwo.add(positionOneOfExperienceOrganizationTwo);
         Link linkOfExperienceOrganizationTwo = new Link("Wrike", "https://www.wrike.com/");
