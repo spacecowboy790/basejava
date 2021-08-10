@@ -2,6 +2,8 @@ package ru.javawebinar.basejava;
 
 public class TestClass {
     public static void main(String[] args) {
-        System.out.println("Hello world ");
+
+        //test commit from IJ
+        System.out.println("Hello world");
     }
 }
