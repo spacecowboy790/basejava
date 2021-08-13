@@ -18,9 +18,6 @@ import static org.junit.Assert.assertTrue;
 public abstract class AbstractStorageTest {
 
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
-    protected static final String DB_URL = Config.get().getDbUrl();
-    protected static final String DB_USER = Config.get().getDbUser();
-    protected static final String DB_PASSWORD = Config.get().getDbPassword();
 
     protected Storage storage;
 
