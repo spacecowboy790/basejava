@@ -16,24 +16,15 @@ public class SqlHelper {
         this.connectionFactory = connectionFactory;
     }
 
-    public <T> T makeOperation(String sql, Executor sqlHelper) {
-        try (Connection conn = getConnection();
+    public <T> T makeOperation(String sql, Executor<T> sqlHelper) {
+        try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = Objects.requireNonNull(conn).prepareStatement(sql)) {
-            return (T) sqlHelper.execute(ps);
+            return sqlHelper.execute(ps);
         } catch (SQLException e) {
             if (e.getSQLState().equals("23505")) {
                 throw new ExistStorageException(e);
             }
             throw new StorageException(e);
         }
-    }
-
-    private Connection getConnection() {
-        try {
-            return connectionFactory.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

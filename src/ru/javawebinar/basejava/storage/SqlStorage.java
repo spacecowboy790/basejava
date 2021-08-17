@@ -24,7 +24,7 @@ public class SqlStorage implements Storage {
     public void clear() {
         sqlHelper.makeOperation("DELETE FROM resume",
                 ps -> {
-                    ps.executeUpdate();
+                    ps.execute();
                     return null;
                 });
     }
