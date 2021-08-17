@@ -11,6 +11,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,10 +22,10 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
-    protected static final String UUID_1 = "uuid1";
-    protected static final String UUID_2 = "uuid2";
-    protected static final String UUID_3 = "uuid3";
-    protected static final String DUMMY = "dummy";
+    protected static final String UUID_1 = UUID.randomUUID().toString();
+    protected static final String UUID_2 = UUID.randomUUID().toString();
+    protected static final String UUID_3 = UUID.randomUUID().toString();
+    protected static final String DUMMY = UUID.randomUUID().toString();
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;

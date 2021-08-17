@@ -1,15 +1,11 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.sql.ConnectionFactory;
 import ru.javawebinar.basejava.storage.SqlStorage;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class Config {
@@ -18,10 +14,7 @@ public class Config {
 
     private Properties props = new Properties();
     private File storageDir;
-    private String dbUrl;
-    private String dbUser;
-    private String dbPassword;
-    private ConnectionFactory connectionFactory;
+    private SqlStorage sqlStorage;
 
     public static Config get() {
         return INSTANCE;
@@ -31,9 +24,7 @@ public class Config {
         try (InputStream is = new FileInputStream(PROPS)) {
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
-            dbUrl = props.getProperty("db.url");
-            dbUser = props.getProperty("db.user");
-            dbPassword = props.getProperty("db.password");
+            sqlStorage = new SqlStorage(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
         } catch (IOException e) {
             throw new IllegalStateException("Invalid config file " + PROPS.getAbsolutePath());
         }
@@ -44,16 +35,6 @@ public class Config {
     }
 
     public SqlStorage getSqlStorage() {
-        connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-        return new SqlStorage();
-    }
-
-    public Connection getConnection() {
-        try {
-            return connectionFactory.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return sqlStorage;
     }
 }

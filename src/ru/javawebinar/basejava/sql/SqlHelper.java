@@ -1,21 +1,39 @@
 package ru.javawebinar.basejava.sql;
 
-import ru.javawebinar.basejava.Config;
+import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
-import ru.javawebinar.basejava.model.Resume;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class SqlHelper {
 
-    public Resume makeOperation(SqlHelperExecute sqlHelper, String sql) {
-        try (Connection conn = Config.get().getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            return sqlHelper.execute(ps);
+    private ConnectionFactory connectionFactory;
+
+    public SqlHelper(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    public <T> T makeOperation(String sql, Executor sqlHelper) {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = Objects.requireNonNull(conn).prepareStatement(sql)) {
+            return (T) sqlHelper.execute(ps);
         } catch (SQLException e) {
+            if (e.getSQLState().equals("23505")) {
+                throw new ExistStorageException(e);
+            }
             throw new StorageException(e);
         }
+    }
+
+    private Connection getConnection() {
+        try {
+            return connectionFactory.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
